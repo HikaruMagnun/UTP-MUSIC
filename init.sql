@@ -11,11 +11,6 @@ BEGIN
 END
 $$;
 
--- 1. Tabla Rol
-CREATE TABLE rol (
-    id BIGINT PRIMARY KEY,
-    nombre VARCHAR(50) NOT NULL UNIQUE
-);
 
 -- 2. Tabla Usuario
 CREATE TABLE usuario (
@@ -24,8 +19,7 @@ CREATE TABLE usuario (
     email VARCHAR(100) NOT NULL UNIQUE,
     password VARCHAR(100) NOT NULL,
     fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    rol_id BIGINT NOT NULL,
-    FOREIGN KEY (rol_id) REFERENCES rol(id)
+    rol VARCHAR(20),
 );
 
 -- 3. Tabla Artista
@@ -60,27 +54,12 @@ CREATE TABLE cancion (
     FOREIGN KEY (album_id) REFERENCES album(id)
 );
 
--- 6. Tabla Genero
-CREATE TABLE genero (
-    id BIGINT PRIMARY KEY,
-    nombre VARCHAR(50) NOT NULL UNIQUE
-);
-
--- 7. Tabla intermedia Cancion_Genero
-CREATE TABLE cancion_genero (
-    cancion_id BIGINT NOT NULL,
-    genero_id BIGINT NOT NULL,
-    PRIMARY KEY (cancion_id, genero_id),
-    FOREIGN KEY (cancion_id) REFERENCES cancion(id),
-    FOREIGN KEY (genero_id) REFERENCES genero(id)
-);
-
 -- 8. Tabla Playlist
 CREATE TABLE playlist (
     id BIGINT PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL,
     usuario_id BIGINT NOT NULL,
-    visibilidad VARCHAR(20) CHECK (visibilidad IN ('PUBLICA', 'PRIVADA')),
+    visibilidad VARCHAR(20) NOT NULL,
     fecha_creacion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (usuario_id) REFERENCES usuario(id)
 );
@@ -107,6 +86,7 @@ CREATE TABLE historial_reproduccion (
 
 -- 11. Tabla Me_Gusta
 CREATE TABLE me_gusta (
+    id BIGINT PRIMARY KEY,
     usuario_id BIGINT NOT NULL,
     cancion_id BIGINT NOT NULL,
     PRIMARY KEY (usuario_id, cancion_id),
