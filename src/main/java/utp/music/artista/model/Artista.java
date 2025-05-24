@@ -14,9 +14,6 @@ public class Artista {
     @Id
     private Long id;
 
-    @Column("usuario_id")
-    private Long usuarioId;
-
     @Column("nombre_artistico")
     private String nombreArtistico;
 

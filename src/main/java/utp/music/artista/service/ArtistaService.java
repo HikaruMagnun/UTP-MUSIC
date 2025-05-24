@@ -22,10 +22,6 @@ public class ArtistaService {
         return artistaRepository.findById(id);
     }
 
-    public Flux<Artista> findByUsuarioId(Long usuarioId) {
-        return artistaRepository.findByUsuarioId(usuarioId);
-    }
-
     public Mono<Artista> save(Artista artista) {
         return artistaRepository.save(artista);
     }

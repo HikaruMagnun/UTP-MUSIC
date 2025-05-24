@@ -1,35 +1,27 @@
--- Inicialización de la base de datos UtpMusic
--- Crear la base de datos si no existe
-DO
-$$
-BEGIN
-    IF NOT EXISTS (
-        SELECT FROM pg_database WHERE datname = 'UtpMusic'
-    ) THEN
-        CREATE DATABASE UtpMusic;
-    END IF;
-END
-$$;
+-- Conectar a la base de datos UtpMusic
+\c UtpMusic;
+-- Crear las tablas necesarias para la aplicación UtpMusic
 
 
--- 2. Tabla Usuario
-CREATE TABLE usuario (
-    id BIGINT PRIMARY KEY,
-    nombre VARCHAR(100) NOT NULL,
-    email VARCHAR(100) NOT NULL UNIQUE,
-    password VARCHAR(100) NOT NULL,
-    fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
-    rol VARCHAR(20),
-);
 
 -- 3. Tabla Artista
 CREATE TABLE artista (
     id BIGINT PRIMARY KEY,
-    usuario_id BIGINT UNIQUE NOT NULL,
     nombre_artistico VARCHAR(100) NOT NULL,
     biografia TEXT,
-    imagen_url VARCHAR(255),
-    FOREIGN KEY (usuario_id) REFERENCES usuario(id)
+    imagen_url VARCHAR(255)
+);
+
+-- 2. Tabla Usuario
+CREATE TABLE usuario (
+    id BIGINT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL UNIQUE,
+    email VARCHAR(100) NOT NULL UNIQUE,
+    password VARCHAR(100) NOT NULL,
+    fecha_registro TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    id_artista BIGINT,
+    rol VARCHAR(20),
+    FOREIGN KEY (id_artista) REFERENCES artista(id)
 );
 
 -- 4. Tabla Album
@@ -54,7 +46,7 @@ CREATE TABLE cancion (
     FOREIGN KEY (album_id) REFERENCES album(id)
 );
 
--- 8. Tabla Playlist
+-- 6. Tabla Playlist
 CREATE TABLE playlist (
     id BIGINT PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL,
@@ -64,7 +56,7 @@ CREATE TABLE playlist (
     FOREIGN KEY (usuario_id) REFERENCES usuario(id)
 );
 
--- 9. Tabla intermedia Playlist_Cancion
+-- 7. Tabla intermedia Playlist_Cancion
 CREATE TABLE playlist_cancion (
     playlist_id BIGINT NOT NULL,
     cancion_id BIGINT NOT NULL,
@@ -74,7 +66,7 @@ CREATE TABLE playlist_cancion (
     FOREIGN KEY (cancion_id) REFERENCES cancion(id)
 );
 
--- 10. Tabla Historial_Reproduccion
+-- 8. Tabla Historial_Reproduccion
 CREATE TABLE historial_reproduccion (
     id BIGINT PRIMARY KEY,
     usuario_id BIGINT NOT NULL,
@@ -84,12 +76,12 @@ CREATE TABLE historial_reproduccion (
     FOREIGN KEY (cancion_id) REFERENCES cancion(id)
 );
 
--- 11. Tabla Me_Gusta
+-- 9. Tabla Me_Gusta
 CREATE TABLE me_gusta (
     id BIGINT PRIMARY KEY,
     usuario_id BIGINT NOT NULL,
     cancion_id BIGINT NOT NULL,
-    PRIMARY KEY (usuario_id, cancion_id),
+    UNIQUE(usuario_id, cancion_id),
     FOREIGN KEY (usuario_id) REFERENCES usuario(id),
     FOREIGN KEY (cancion_id) REFERENCES cancion(id)
 );
