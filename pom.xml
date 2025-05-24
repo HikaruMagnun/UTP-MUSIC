@@ -30,35 +30,47 @@
 		<java.version>17</java.version>
 	</properties>
 	<dependencies>
+		<!-- Dependencia de Spring Boot para acceso a bases de datos reactivas usando R2DBC -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-data-r2dbc</artifactId>
 		</dependency>
+
+		<!-- Dependencia de Spring Boot para construir aplicaciones web reactivas con WebFlux -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-webflux</artifactId>
 		</dependency>
 
+		<!-- Controlador JDBC de PostgreSQL para conectividad a la base de datos en tiempo de ejecución -->
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>postgresql</artifactId>
 			<scope>runtime</scope>
 		</dependency>
+
+		<!-- Controlador R2DBC para PostgreSQL para acceso a bases de datos reactivas -->
 		<dependency>
 			<groupId>org.postgresql</groupId>
 			<artifactId>r2dbc-postgresql</artifactId>
 			<scope>runtime</scope>
 		</dependency>
+
+		<!-- Biblioteca Lombok para reducir el código repetitivo -->
 		<dependency>
 			<groupId>org.projectlombok</groupId>
 			<artifactId>lombok</artifactId>
 			<optional>true</optional>
 		</dependency>
+
+		<!-- Dependencia de Spring Boot para pruebas de aplicaciones Spring Boot -->
 		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
+
+		<!-- Biblioteca Reactor Test para pruebas de flujos reactivos -->
 		<dependency>
 			<groupId>io.projectreactor</groupId>
 			<artifactId>reactor-test</artifactId>
