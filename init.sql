@@ -76,10 +76,9 @@ CREATE TABLE historial_reproduccion (
 
 -- 9. Tabla Me_Gusta
 CREATE TABLE me_gusta (
-    id BIGSERIAL PRIMARY KEY,
     usuario_id BIGINT NOT NULL,
     cancion_id BIGINT NOT NULL,
-    UNIQUE(usuario_id, cancion_id),
+    PRIMARY KEY (usuario_id, cancion_id),
     FOREIGN KEY (usuario_id) REFERENCES usuario(id),
     FOREIGN KEY (cancion_id) REFERENCES cancion(id)
 );

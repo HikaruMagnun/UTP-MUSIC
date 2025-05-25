@@ -15,8 +15,6 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @Builder
 public class MeGusta {
-    @Id
-    private Long id;
 
     @Column("usuario_id")
     private Long usuarioId;
