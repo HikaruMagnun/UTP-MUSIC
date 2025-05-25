@@ -2,11 +2,9 @@
 \c UtpMusic;
 -- Crear las tablas necesarias para la aplicación UtpMusic
 
-
-
 -- 3. Tabla Artista
 CREATE TABLE artista (
-    id BIGINT PRIMARY KEY,
+    id BIGSERIAL PRIMARY KEY,
     nombre_artistico VARCHAR(100) NOT NULL,
     biografia TEXT,
     imagen_url VARCHAR(255)
@@ -14,7 +12,7 @@ CREATE TABLE artista (
 
 -- 2. Tabla Usuario
 CREATE TABLE usuario (
-    id BIGINT PRIMARY KEY,
+    id BIGSERIAL PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL UNIQUE,
     email VARCHAR(100) NOT NULL UNIQUE,
     password VARCHAR(100) NOT NULL,
@@ -26,7 +24,7 @@ CREATE TABLE usuario (
 
 -- 4. Tabla Album
 CREATE TABLE album (
-    id BIGINT PRIMARY KEY,
+    id BIGSERIAL PRIMARY KEY,
     titulo VARCHAR(100) NOT NULL,
     artista_id BIGINT NOT NULL,
     fecha_lanzamiento DATE,
@@ -36,7 +34,7 @@ CREATE TABLE album (
 
 -- 5. Tabla Cancion
 CREATE TABLE cancion (
-    id BIGINT PRIMARY KEY,
+    id BIGSERIAL PRIMARY KEY,
     titulo VARCHAR(100) NOT NULL,
     duracion INT NOT NULL, -- en segundos
     archivo_url VARCHAR(255) NOT NULL,
@@ -48,7 +46,7 @@ CREATE TABLE cancion (
 
 -- 6. Tabla Playlist
 CREATE TABLE playlist (
-    id BIGINT PRIMARY KEY,
+    id BIGSERIAL PRIMARY KEY,
     nombre VARCHAR(100) NOT NULL,
     usuario_id BIGINT NOT NULL,
     visibilidad VARCHAR(20) NOT NULL,
@@ -68,7 +66,7 @@ CREATE TABLE playlist_cancion (
 
 -- 8. Tabla Historial_Reproduccion
 CREATE TABLE historial_reproduccion (
-    id BIGINT PRIMARY KEY,
+    id BIGSERIAL PRIMARY KEY,
     usuario_id BIGINT NOT NULL,
     cancion_id BIGINT NOT NULL,
     fecha_hora TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
@@ -78,7 +76,7 @@ CREATE TABLE historial_reproduccion (
 
 -- 9. Tabla Me_Gusta
 CREATE TABLE me_gusta (
-    id BIGINT PRIMARY KEY,
+    id BIGSERIAL PRIMARY KEY,
     usuario_id BIGINT NOT NULL,
     cancion_id BIGINT NOT NULL,
     UNIQUE(usuario_id, cancion_id),

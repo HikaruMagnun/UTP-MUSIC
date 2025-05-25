@@ -12,7 +12,6 @@ import lombok.RequiredArgsConstructor;
 import reactor.core.publisher.Mono;
 import utp.music.usuario.model.dto.LoginUsuarioDto;
 import utp.music.usuario.model.dto.RegisterUserDto;
-import utp.music.usuario.model.dto.TokenDto;
 import utp.music.usuario.model.entity.Usuario;
 import utp.music.usuario.service.UsuarioService;
 
@@ -24,16 +23,13 @@ public class UsuarioController {
     private final UsuarioService usuarioService;
 
     @PostMapping("/login")
-    public Mono<ResponseEntity<TokenDto>> login(@RequestBody @Valid LoginUsuarioDto loginDto) {
-        return usuarioService.login(loginDto)
-                .map(token -> ResponseEntity.ok(token))
-                .onErrorResume(e -> Mono.just(ResponseEntity.status(HttpStatus.BAD_REQUEST).build()));
+    public Mono<Usuario> login(@RequestBody @Valid LoginUsuarioDto loginDto) {
+        return usuarioService.login(loginDto);
     }
 
     @PostMapping("/register")
-    public Mono<ResponseEntity<Usuario>> register(@RequestBody @Valid RegisterUserDto registerDto) {
-        return usuarioService.register(registerDto)
-                .map(user -> ResponseEntity.status(HttpStatus.CREATED).body(user))
-                .onErrorResume(e -> Mono.just(ResponseEntity.status(HttpStatus.BAD_REQUEST).build()));
+    public Mono<Usuario> register(@RequestBody @Valid RegisterUserDto registerDto) {
+        System.out.println("Registering user: " + registerDto);
+        return usuarioService.register(registerDto);
     }
 }

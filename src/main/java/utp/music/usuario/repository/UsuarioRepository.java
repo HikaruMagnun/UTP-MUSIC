@@ -17,4 +17,6 @@ public interface UsuarioRepository extends R2dbcRepository<Usuario, Long> {
      *         encuentra
      */
     Mono<Usuario> findByNombreOrEmail(String username, String email);
+
+    Mono<Usuario> findByEmail(String email);
 }

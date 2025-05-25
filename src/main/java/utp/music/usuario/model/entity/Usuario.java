@@ -1,7 +1,6 @@
 package utp.music.usuario.model.entity;
 
 import java.time.LocalDateTime;
-import java.util.Date;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.relational.core.mapping.Column;
@@ -24,7 +23,7 @@ public class Usuario {
     private String password;
 
     @Column("fecha_registro")
-    private Date fechaRegistro;
+    private LocalDateTime fechaRegistro;
 
     @Column("id_artista")
     private Long idArtista;
