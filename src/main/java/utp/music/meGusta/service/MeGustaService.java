@@ -15,12 +15,10 @@ import utp.music.meGusta.repository.MeGustaRepository;
 public class MeGustaService {
 
     private final MeGustaRepository meGustaRepository;
-    private final CancionService cancionService;
 
     // Método para encontrar todos los me gusta por usuario
     public Flux<Cancion> findAllByUsuarioId(Long usuarioId) {
-        return meGustaRepository.findByUsuarioId(usuarioId)
-                .flatMap(meGusta -> cancionService.findById(meGusta.getCancionId()));
+        return meGustaRepository.findCancionesByUsuarioId(usuarioId);
     }
 
     // Método para guardar un me gusta
