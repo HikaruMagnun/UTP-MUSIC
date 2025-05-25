@@ -58,7 +58,7 @@ CREATE TABLE playlist (
 CREATE TABLE playlist_cancion (
     playlist_id BIGINT NOT NULL,
     cancion_id BIGINT NOT NULL,
-    orden INT,
+    fecha_insercion TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     PRIMARY KEY (playlist_id, cancion_id),
     FOREIGN KEY (playlist_id) REFERENCES playlist(id),
     FOREIGN KEY (cancion_id) REFERENCES cancion(id)
