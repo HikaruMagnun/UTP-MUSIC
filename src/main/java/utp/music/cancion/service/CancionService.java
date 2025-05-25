@@ -7,6 +7,8 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import utp.music.cancion.model.Cancion;
 import utp.music.cancion.repository.CancionRepository;
+import utp.music.cancion.dto.AddCancionDto;
+import utp.music.cancion.dto.UpdateCancionDto;
 
 @RequiredArgsConstructor
 @Service
@@ -40,6 +42,63 @@ public class CancionService {
 
     public Mono<Void> deleteById(Long id) {
         return cancionRepository.deleteById(id);
+    }
+
+    public Mono<Cancion> addCancion(AddCancionDto addCancionDto) {
+        Cancion cancion = Cancion.builder()
+                .titulo(addCancionDto.getNombre())
+                .albumId(addCancionDto.getAlbumId())
+                .artistaId(addCancionDto.getIdArtista())
+                .duracion(addCancionDto.getDuracion())
+                .archivoUrl(addCancionDto.getFilePath()) // Set the file path
+                .build();
+        return cancionRepository.save(cancion);
+    }
+
+    public Mono<Void> deleteCancion(Long idCancion) {
+        return cancionRepository.deleteById(idCancion);
+    }
+
+    public Mono<Void> updateCancion(UpdateCancionDto updateCancionDto) {
+        return cancionRepository.findById(updateCancionDto.getId())
+                .flatMap(cancion -> {
+                    Cancion updatedCancion = Cancion.builder()
+                            .id(cancion.getId())
+                            .titulo(updateCancionDto.getNombre())
+                            .duracion(updateCancionDto.getDuracion())
+                            .albumId(updateCancionDto.getAlbum())
+                            .artistaId(updateCancionDto.getArtista())
+                            .archivoUrl(cancion.getArchivoUrl()) // Preserve existing file path
+                            .build();
+                    return cancionRepository.save(updatedCancion);
+                })
+                .then();
+    }
+
+    public Flux<Cancion> listCanciones() {
+        return cancionRepository.findAll();
+    }
+
+    public Flux<Cancion> searchCanciones(String query) {
+        return cancionRepository.findTop5ByTituloContainingIgnoreCase(query);
+    }
+
+    public Mono<Cancion> getCancionDetails(Long idCancion) {
+        return cancionRepository.findById(idCancion);
+    }
+
+    public Flux<Cancion> listCancionesByArtista(Long idArtista) {
+        return cancionRepository.findByArtistaId(idArtista);
+    }
+
+    public Flux<Cancion> listCancionesByAlbum(Long idAlbum) {
+        return cancionRepository.findByAlbumId(idAlbum);
+    }
+
+    public Mono<String> getCancionFilePath(Long idCancion) {
+        return cancionRepository.findById(idCancion)
+                .map(Cancion::getArchivoUrl)
+                .switchIfEmpty(Mono.error(new RuntimeException("Canción no encontrada")));
     }
 
 }
