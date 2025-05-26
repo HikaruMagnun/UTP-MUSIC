@@ -4,21 +4,20 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import lombok.RequiredArgsConstructor;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 import utp.music.cancion.model.Cancion;
-import utp.music.playlist.model.enitity.Playlist;
-import utp.music.playlist.service.PlaylistService;
 import utp.music.playlist.dto.CreatePlaylistDto;
 import utp.music.playlist.dto.UpdatePlaylistDto;
+import utp.music.playlist.model.enitity.Playlist;
+import utp.music.playlist.service.PlaylistService;
 
 @RequiredArgsConstructor
 @RestController
@@ -62,5 +61,10 @@ public class PlaylistController {
     @DeleteMapping("/delete/{id}")
     public Mono<Void> deletePlaylist(@PathVariable Long id) {
         return playlistService.deleteById(id);
+    }
+
+    @GetMapping("/list-by-user/{userId}")
+    public Flux<Playlist> listPlaylistsByUserId(@PathVariable Long userId) {
+        return playlistService.findByUsuarioId(userId);
     }
 }
