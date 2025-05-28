@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import lombok.RequiredArgsConstructor;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import utp.music.historial.model.DailyHistorialCount;
 import utp.music.historial.model.HistorialReproduccion;
 import utp.music.historial.repository.HistorialReproduccionRepository;
 
@@ -48,5 +49,9 @@ public class HistorialReproduccionService {
 
     public Mono<Long> countByArtistaId(Long idArtista) {
         return historialRepository.countByArtistaId(idArtista);
+    }
+
+    public Flux<DailyHistorialCount> countByArtistaIdGroupByDay(Long idArtista) {
+        return historialRepository.countByArtistaIdGroupByDay(idArtista);
     }
 }
