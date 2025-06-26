@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
+import utp.music.historial.model.DailyHistorialCount;
 import utp.music.historial.model.HistorialReproduccion;
 import utp.music.historial.service.HistorialReproduccionService;
 
@@ -33,5 +34,10 @@ public class HistorialReproduccionController {
     @GetMapping("/artist-count")
     public Mono<Long> countHistorialByArtista(@RequestParam Long idArtista) {
         return historialReproduccionService.countByArtistaId(idArtista);
+    }
+
+    @GetMapping("/artist-count-by-day")
+    public Flux<DailyHistorialCount> countHistorialByArtistaGroupByDay(@RequestParam Long idArtista) {
+        return historialReproduccionService.countByArtistaIdGroupByDay(idArtista);
     }
 }
