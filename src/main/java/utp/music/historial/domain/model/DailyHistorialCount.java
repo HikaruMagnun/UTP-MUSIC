@@ -1,4 +1,4 @@
-package utp.music.historial.model;
+package utp.music.historial.domain.model;
 
 import java.time.LocalDate;
 
